@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employees - Mobixa</title>
+
+    <!-- Common CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        /* =========================
+           EMPLOYEE PAGE
+        ========================= */
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .page-header p {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            border: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #24243a;
+            color: #ddd;
+            border: 1px solid #353550;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+
+        /* =========================
+           STATISTICS
+        ========================= */
+
+        .employee-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: #171725;
+            border: 1px solid #29293d;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(124, 58, 237, 0.15);
+            border-radius: 10px;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card h3 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: #999;
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           TOOLBAR
+        ========================= */
+
+        .employee-toolbar {
+            background: #171725;
+            border: 1px solid #29293d;
+            border-radius: 15px;
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box span {
+            position: absolute;
+            left: 14px;
+            top: 10px;
+            font-size: 18px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 42px;
+            background: #10101c;
+            border: 1px solid #303047;
+            border-radius: 10px;
+            color: white;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: #7c3aed;
+        }
+
+        .filter-box select {
+            background: #10101c;
+            color: #ddd;
+            border: 1px solid #303047;
+            padding: 12px 15px;
+            border-radius: 10px;
+            outline: none;
+            min-width: 150px;
+        }
+
+
+        /* =========================
+           EMPLOYEE TABLE
+        ========================= */
+
+        .table-container {
+            background: #171725;
+            border: 1px solid #29293d;
+            border-radius: 15px;
+            overflow-x: auto;
+        }
+
+        .table-header {
+            padding: 20px;
+            border-bottom: 1px solid #29293d;
+        }
+
+        .table-header h2 {
+            font-size: 18px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 950px;
+        }
+
+        th,
+        td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid #29293d;
+        }
+
+        th {
+            color: #999;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        td {
+            color: #ddd;
+            font-size: 14px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+
+        /* =========================
+           EMPLOYEE PROFILE
+        ========================= */
+
+        .employee-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .employee-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .employee-info strong {
+            display: block;
+            color: white;
+            margin-bottom: 3px;
+        }
+
+        .employee-info small {
+            color: #777;
+        }
+
+        .employee-id {
+            color: #a78bfa;
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           ROLE BADGES
+        ========================= */
+
+        .role {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .admin-role {
+            color: #c4b5fd;
+            background: rgba(124, 58, 237, 0.15);
+        }
+
+        .manager-role {
+            color: #60a5fa;
+            background: rgba(59, 130, 246, 0.12);
+        }
+
+        .sales-role {
+            color: #fbbf24;
+            background: rgba(245, 158, 11, 0.12);
+        }
+
+        .staff-role {
+            color: #34d399;
+            background: rgba(16, 185, 129, 0.12);
+        }
+
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .active-status {
+            color: #4ade80;
+            background: rgba(34, 197, 94, 0.12);
+        }
+
+        .inactive-status {
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.12);
+        }
+
+
+        /* =========================
+           ACTION BUTTON
+        ========================= */
+
+        .action-btn {
+            background: #24243a;
+            border: 1px solid #353550;
+            color: #ccc;
+            padding: 7px 10px;
+            border-radius: 7px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .action-btn:hover {
+            background: #343450;
+        }
+
+
+        /* =========================
+           MODAL
+        ========================= */
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 600px;
+            background: #171725;
+            border: 1px solid #34344b;
+            border-radius: 18px;
+            padding: 25px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            font-size: 21px;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: #aaa;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #bbb;
+            margin-bottom: 7px;
+            font-size: 13px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 9px;
+            border: 1px solid #353550;
+            background: #10101c;
+            color: white;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #7c3aed;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .employee-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .employee-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .header-actions {
+                width: 100%;
+            }
+
+            .header-actions button {
+                flex: 1;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                M
+            </div>
+
+            <div>
+                <h2>Mobixa</h2>
+                <span>Mobile Shop</span>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html">
+                <span>📊</span>
+                Dashboard
+            </a>
+
+            <a href="products.html">
+                <span>📱</span>
+                Products
+            </a>
+
+            <a href="inventory.html">
+                <span>📦</span>
+                Inventory
+            </a>
+
+            <a href="sales.html">
+                <span>💰</span>
+                Sales
+            </a>
+
+            <a href="customers.html">
+                <span>👥</span>
+                Customers
+            </a>
+
+            <a href="employees.html" class="active">
+                <span>👨‍💼</span>
+                Employees
+            </a>
+
+            <a href="reports.html">
+                <span>📈</span>
+                Reports
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="settings.html">
+                <span>⚙️</span>
+                Settings
+            </a>
+
+            <a href="login.html">
+                <span>🚪</span>
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <main class="main-content">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>Employees</h1>
+
+                <p>
+                    Manage your mobile shop employees
+                </p>
+
+            </div>
+
+
+            <div class="header-actions">
+
+                <button
+                    class="btn btn-secondary"
+                    onclick="exportEmployees()">
+
+                    📥 Export
+
+                </button>
+
+
+                <button
+                    class="btn btn-primary"
+                    onclick="openModal()">
+
+                    + Add Employee
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             STATISTICS
+        ========================= -->
+
+        <div class="employee-stats">
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    👨‍💼
+                </div>
+
+                <h3 id="totalEmployees">
+                    12
+                </h3>
+
+                <p>
+                    Total Employees
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🟢
+                </div>
+
+                <h3>
+                    10
+                </h3>
+
+                <p>
+                    Active Employees
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    👑
+                </div>
+
+                <h3>
+                    1
+                </h3>
+
+                <p>
+                    Administrators
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    💼
+                </div>
+
+                <h3>
+                    8
+                </h3>
+
+                <p>
+                    Sales Staff
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             SEARCH + FILTER
+        ========================= -->
+
+        <div class="employee-toolbar">
+
+
+            <div class="search-box">
+
+                <span>
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search by name, phone or email..."
+                    onkeyup="searchEmployees()">
+
+            </div>
+
+
+            <div class="filter-box">
+
+                <select
+                    id="statusFilter"
+                    onchange="filterEmployees()">
+
+                    <option value="all">
+                        All Status
+                    </option>
+
+                    <option value="active">
+                        Active
+                    </option>
+
+                    <option value="inactive">
+                        Inactive
+                    </option>
+
+                </select>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================
+             EMPLOYEE TABLE
+        ========================= -->
+
+        <div class="table-container">
+
+
+            <div class="table-header">
+
+                <h2>
+                    Employee List
+                </h2>
+
+            </div>
+
+
+            <table id="employeeTable">
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Employee
+                        </th>
+
+                        <th>
+                            Employee ID
+                        </th>
+
+                        <th>
+                            Phone
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Role
+                        </th>
+
+                        <th>
+                            Joining Date
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <!-- EMPLOYEE 1 -->
+
+                    <tr>
+
+                        <td>
+
+                            <div class="employee-name">
+
+                                <div class="employee-avatar">
+                                    AM
+                                </div>
+
+                                <div class="employee-info">
+
+                                    <strong>
+                                        Adithya M
+                                    </strong>
+
+                                    <small>
+                                        Main Administrator
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td class="employee-id">
+                            EMP001
+                        </td>
+
+
+                        <td>
+                            9876543210
+                        </td>
+
+
+                        <td>
+                            admin@mobixa.com
+                        </td>
+
+
+                        <td>
+
+                            <span class="role admin-role">
+                                Admin
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            01 Jan 2026
+                        </td>
+
+
+                        <td>
+
+                            <span class="status active-status">
+                                Active
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                class="action-btn"
+                                onclick="viewEmployee('EMP001')">
+
+                                👁
+
+                            </button>
+
+
+                            <button
+                                class="action-btn"
+                                onclick="deleteEmployee(this)">
+
+                                🗑
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- EMPLOYEE 2 -->
+
+                    <tr>
+
+                        <td>
+
+                            <div class="employee-name">
+
+                                <div class="employee-avatar">
+                                    RK
+                                </div>
+
+                                <div class="employee-info">
+
+                                    <strong>
+                                        Rahul Kumar
+                                    </strong>
+
+                                    <small>
+                                        Store Manager
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td class="employee-id">
+                            EMP002
+                        </td>
+
+
+                        <td>
+                            9876123456
+                        </td>
+
+
+                        <td>
+                            rahul@mobixa.com
+                        </td>
+
+
+                        <td>
+
+                            <span class="role manager-role">
+                                Manager
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            15 Jan 2026
+                        </td>
+
+
+                        <td>
+
+                            <span class="status active-status">
+                                Active
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                class="action-btn"
+                                onclick="viewEmployee('EMP002')">
+
+                                👁
+
+                            </button>
+
+
+                            <button
+                                class="action-btn"
+                                onclick="deleteEmployee(this)">
+
+                                🗑
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- EMPLOYEE 3 -->
+
+                    <tr>
+
+                        <td>
+
+                            <div class="employee-name">
+
+                                <div class="employee-avatar">
+                                    VS
+                                </div>
+
+                                <div class="employee-info">
+
+                                    <strong>
+                                        Vishnu S
+                                    </strong>
+
+                                    <small>
+                                        Sales Executive
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td class="employee-id">
+                            EMP003
+                        </td>
+
+
+                        <td>
+                            9567891234
+                        </td>
+
+
+                        <td>
+                            vishnu@mobixa.com
+                        </td>
+
+
+                        <td>
+
+                            <span class="role sales-role">
+                                Sales
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            20 Feb 2026
+                        </td>
+
+
+                        <td>
+
+                            <span class="status active-status">
+                                Active
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                class="action-btn"
+                                onclick="viewEmployee('EMP003')">
+
+                                👁
+
+                            </button>
+
+
+                            <button
+                                class="action-btn"
+                                onclick="deleteEmployee(this)">
+
+                                🗑
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- EMPLOYEE 4 -->
+
+                    <tr>
+
+                        <td>
+
+                            <div class="employee-name">
+
+                                <div class="employee-avatar">
+                                    AP
+                                </div>
+
+                                <div class="employee-info">
+
+                                    <strong>
+                                        Anjali P
+                                    </strong>
+
+                                    <small>
+                                        Sales Staff
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td class="employee-id">
+                            EMP004
+                        </td>
+
+
+                        <td>
+                            9123456780
+                        </td>
+
+
+                        <td>
+                            anjali@mobixa.com
+                        </td>
+
+
+                        <td>
+
+                            <span class="role staff-role">
+                                Staff
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            10 Mar 2026
+                        </td>
+
+
+                        <td>
+
+                            <span class="status active-status">
+                                Active
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                class="action-btn"
+                                onclick="viewEmployee('EMP004')">
+
+                                👁
+
+                            </button>
+
+
+                            <button
+                                class="action-btn"
+                                onclick="deleteEmployee(this)">
+
+                                🗑
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- EMPLOYEE 5 -->
+
+                    <tr>
+
+                        <td>
+
+                            <div class="employee-name">
+
+                                <div class="employee-avatar">
+                                    NK
+                                </div>
+
+                                <div class="employee-info">
+
+                                    <strong>
+                                        Neha K
+                                    </strong>
+
+                                    <small>
+                                        Sales Staff
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td class="employee-id">
+                            EMP005
+                        </td>
+
+
+                        <td>
+                            9098765432
+                        </td>
+
+
+                        <td>
+                            neha@mobixa.com
+                        </td>
+
+
+                        <td>
+
+                            <span class="role staff-role">
+                                Staff
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            25 Mar 2026
+                        </td>
+
+
+                        <td>
+
+                            <span class="status inactive-status">
+                                Inactive
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                class="action-btn"
+                                onclick="viewEmployee('EMP005')">
+
+                                👁
+
+                            </button>
+
+
+                            <button
+                                class="action-btn"
+                                onclick="deleteEmployee(this)">
+
+                                🗑
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         ADD EMPLOYEE MODAL
+    ========================= -->
+
+    <div
+        class="modal"
+        id="employeeModal">
+
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+
+                <h2>
+                    Add Employee
+                </h2>
+
+
+                <button
+                    class="close-btn"
+                    onclick="closeModal()">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <form
+                onsubmit="addEmployee(event)">
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="employeeName"
+                            placeholder="Enter full name"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="employeePhone"
+                            placeholder="Enter phone number"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="employeeEmail"
+                        placeholder="Enter email address"
+                        required>
+
+                </div>
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Role
+                        </label>
+
+                        <select
+                            id="employeeRole"
+                            required>
+
+                            <option value="">
+                                Select Role
+                            </option>
+
+                            <option value="Manager">
+                                Manager
+                            </option>
+
+                            <option value="Sales">
+                                Sales
+                            </option>
+
+                            <option value="Staff">
+                                Staff
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Status
+                        </label>
+
+                        <select
+                            id="employeeStatus"
+                            required>
+
+                            <option value="Active">
+                                Active
+                            </option>
+
+                            <option value="Inactive">
+                                Inactive
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Joining Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="joiningDate"
+                        required>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        onclick="closeModal()">
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                        Add Employee
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+
+        // Open modal
+
+        function openModal() {
+
+            document.getElementById(
+                "employeeModal"
+            ).style.display = "flex";
+
+        }
+
+
+        // Close modal
+
+        function closeModal() {
+
+            document.getElementById(
+                "employeeModal"
+            ).style.display = "none";
+
+        }
+
+
+        // Add employee
+
+        function addEmployee(event) {
+
+            event.preventDefault();
+
+
+            const name =
+                document.getElementById(
+                    "employeeName"
+                ).value;
+
+
+            const phone =
+                document.getElementById(
+                    "employeePhone"
+                ).value;
+
+
+            const email =
+                document.getElementById(
+                    "employeeEmail"
+                ).value;
+
+
+            const role =
+                document.getElementById(
+                    "employeeRole"
+                ).value;
+
+
+            const status =
+                document.getElementById(
+                    "employeeStatus"
+                ).value;
+
+
+            const joiningDate =
+                document.getElementById(
+                    "joiningDate"
+                ).value;
+
+
+            const table =
+                document.querySelector(
+                    "#employeeTable tbody"
+                );
+
+
+            const employeeNumber =
+                table.rows.length + 1;
+
+
+            const initials =
+                name
+                    .split(" ")
+                    .map(word => word.charAt(0))
+                    .join("")
+                    .substring(0, 2)
+                    .toUpperCase();
+
+
+            let roleClass = "staff-role";
+
+
+            if (role === "Manager") {
+
+                roleClass = "manager-role";
+
+            }
+            else if (role === "Sales") {
+
+                roleClass = "sales-role";
+
+            }
+
+
+            let statusClass = "active-status";
+
+
+            if (status === "Inactive") {
+
+                statusClass = "inactive-status";
+
+            }
+
+
+            const newRow =
+                table.insertRow(0);
+
+
+            newRow.innerHTML = `
+
+                <td>
+
+                    <div class="employee-name">
+
+                        <div class="employee-avatar">
+                            ${initials}
+                        </div>
+
+                        <div class="employee-info">
+
+                            <strong>
+                                ${name}
+                            </strong>
+
+                            <small>
+                                ${role} Employee
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+
+                <td class="employee-id">
+                    EMP00${employeeNumber + 5}
+                </td>
+
+
+                <td>
+                    ${phone}
+                </td>
+
+
+                <td>
+                    ${email}
+                </td>
+
+
+                <td>
+
+                    <span class="role ${roleClass}">
+                        ${role}
+                    </span>
+
+                </td>
+
+
+                <td>
+                    ${joiningDate}
+                </td>
+
+
+                <td>
+
+                    <span class="status ${statusClass}">
+                        ${status}
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <button
+                        class="action-btn"
+                        onclick="viewEmployee('EMP00${employeeNumber + 5}')">
+
+                        👁
+
+                    </button>
+
+
+                    <button
+                        class="action-btn"
+                        onclick="deleteEmployee(this)">
+
+                        🗑
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            // Update employee count
+
+            const totalEmployees =
+                document.getElementById(
+                    "totalEmployees"
+                );
+
+
+            totalEmployees.innerText =
+                Number(totalEmployees.innerText) + 1;
+
+
+            alert(
+                "Employee added successfully!"
+            );
+
+
+            document.querySelector("form").reset();
+
+            closeModal();
+
+        }
+
+
+        // Search employees
+
+        function searchEmployees() {
+
+            const search =
+                document
+                    .getElementById(
+                        "searchInput"
+                    )
+                    .value
+                    .toLowerCase();
+
+
+            const rows =
+                document.querySelectorAll(
+                    "#employeeTable tbody tr"
+                );
+
+
+            rows.forEach(row => {
+
+                const text =
+                    row.innerText.toLowerCase();
+
+
+                row.style.display =
+                    text.includes(search)
+                        ? ""
+                        : "none";
+
+            });
+
+        }
+
+
+        // Filter employees
+
+        function filterEmployees() {
+
+            const filter =
+                document.getElementById(
+                    "statusFilter"
+                ).value;
+
+
+            const rows =
+                document.querySelectorAll(
+                    "#employeeTable tbody tr"
+                );
+
+
+            rows.forEach(row => {
+
+                const statusElement =
+                    row.querySelector(
+                        ".status"
+                    );
+
+
+                const status =
+                    statusElement.innerText
+                        .toLowerCase();
+
+
+                if (filter === "all") {
+
+                    row.style.display = "";
+
+                }
+                else {
+
+                    row.style.display =
+                        status === filter
+                            ? ""
+                            : "none";
+
+                }
+
+            });
+
+        }
+
+
+        // View employee
+
+        function viewEmployee(id) {
+
+            alert(
+                "Viewing employee " + id
+            );
+
+        }
+
+
+        // Delete employee
+
+        function deleteEmployee(button) {
+
+            const confirmDelete =
+                confirm(
+                    "Are you sure you want to delete this employee?"
+                );
+
+
+            if (confirmDelete) {
+
+                button
+                    .closest("tr")
+                    .remove();
+
+
+                const totalEmployees =
+                    document.getElementById(
+                        "totalEmployees"
+                    );
+
+
+                totalEmployees.innerText =
+                    Math.max(
+                        0,
+                        Number(
+                            totalEmployees.innerText
+                        ) - 1
+                    );
+
+            }
+
+        }
+
+
+        // Export employees
+
+        function exportEmployees() {
+
+            alert(
+                "Employee export will be connected to the Node.js backend later."
+            );
+
+        }
+
+
+        // Close modal when clicking outside
+
+        window.onclick = function(event) {
+
+            const modal =
+                document.getElementById(
+                    "employeeModal"
+                );
+
+
+            if (event.target === modal) {
+
+                closeModal();
+
+            }
+
+        };
+
+    </script>
+
+</body>
+
+</html>

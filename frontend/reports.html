@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reports - Mobixa</title>
+
+    <!-- Common CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* =========================
+           REPORT PAGE
+        ========================= */
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .page-header p {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            border: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #24243a;
+            color: #ddd;
+            border: 1px solid #353550;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* =========================
+           FILTER
+        ========================= */
+
+        .report-filter {
+            background: #171725;
+            border: 1px solid #29293d;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            align-items: end;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .filter-group label {
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            background: #10101c;
+            color: white;
+            border: 1px solid #353550;
+            border-radius: 9px;
+            padding: 11px 13px;
+            outline: none;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            border-color: #7c3aed;
+        }
+
+        /* =========================
+           SUMMARY CARDS
+        ========================= */
+
+        .report-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: #171725;
+            border: 1px solid #29293d;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(124, 58, 237, 0.15);
+            border-radius: 10px;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card h3 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: #999;
+            font-size: 13px;
+        }
+
+        .positive {
+            color: #4ade80;
+            font-size: 12px;
+            margin-top: 7px;
+        }
+
+        /* =========================
+           REPORT GRID
+        ========================= */
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .report-card {
+            background: #171725;
+            border: 1px solid #29293d;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .report-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .report-card-header h2 {
+            font-size: 18px;
+        }
+
+        .report-card-header span {
+            color: #999;
+            font-size: 12px;
+        }
+
+        /* =========================
+           SALES CHART
+        ========================= */
+
+        .chart {
+            height: 260px;
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            gap: 15px;
+            padding: 20px 10px 0;
+            border-bottom: 1px solid #333344;
+        }
+
+        .bar-wrapper {
+            height: 100%;
+            flex: 1;
+            display: flex;
+            align-items: end;
+            justify-content: center;
+            position: relative;
+        }
+
+        .bar {
+            width: 45px;
+            max-width: 80%;
+            background: linear-gradient(180deg, #ec4899, #7c3aed);
+            border-radius: 7px 7px 0 0;
+            transition: 0.3s;
+        }
+
+        .bar:hover {
+            opacity: 0.8;
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -25px;
+            color: #999;
+            font-size: 12px;
+        }
+
+        /* =========================
+           PAYMENT SUMMARY
+        ========================= */
+
+        .payment-item {
+            margin-bottom: 20px;
+        }
+
+        .payment-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .payment-top span:first-child {
+            color: #ccc;
+        }
+
+        .payment-top span:last-child {
+            color: white;
+            font-weight: 600;
+        }
+
+        .progress {
+            height: 8px;
+            background: #29293d;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #7c3aed, #ec4899);
+            border-radius: 20px;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-container {
+            background: #171725;
+            border: 1px solid #29293d;
+            border-radius: 15px;
+            overflow-x: auto;
+            margin-bottom: 25px;
+        }
+
+        .table-header {
+            padding: 20px;
+            border-bottom: 1px solid #29293d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header h2 {
+            font-size: 18px;
+        }
+
+        .table-header span {
+            color: #999;
+            font-size: 13px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        th,
+        td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid #29293d;
+        }
+
+        th {
+            color: #999;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        td {
+            color: #ddd;
+            font-size: 14px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .amount {
+            color: #a78bfa;
+            font-weight: 600;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .completed {
+            color: #4ade80;
+            background: rgba(34, 197, 94, 0.12);
+        }
+
+        /* =========================
+           TOP PRODUCTS
+        ========================= */
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 0;
+            border-bottom: 1px solid #29293d;
+        }
+
+        .product-item:last-child {
+            border-bottom: none;
+        }
+
+        .product-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: rgba(124, 58, 237, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a78bfa;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .product-details {
+            flex: 1;
+        }
+
+        .product-details strong {
+            display: block;
+            color: white;
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .product-details small {
+            color: #777;
+        }
+
+        .product-sales {
+            color: #ddd;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .report-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .report-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .report-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .report-filter {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .filter-group input,
+            .filter-group select {
+                width: 100%;
+            }
+
+            .header-actions {
+                width: 100%;
+            }
+
+            .header-actions button {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">M</div>
+
+            <div>
+                <h2>Mobixa</h2>
+                <span>Mobile Shop</span>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html">
+                <span>📊</span>
+                Dashboard
+            </a>
+
+            <a href="products.html">
+                <span>📱</span>
+                Products
+            </a>
+
+            <a href="inventory.html">
+                <span>📦</span>
+                Inventory
+            </a>
+
+            <a href="sales.html">
+                <span>💰</span>
+                Sales
+            </a>
+
+            <a href="customers.html">
+                <span>👥</span>
+                Customers
+            </a>
+
+            <a href="employees.html">
+                <span>👨‍💼</span>
+                Employees
+            </a>
+
+            <a href="reports.html" class="active">
+                <span>📈</span>
+                Reports
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="settings.html">
+                <span>⚙️</span>
+                Settings
+            </a>
+
+            <a href="login.html">
+                <span>🚪</span>
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <main class="main-content">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>Reports</h1>
+
+                <p>
+                    Analyze your mobile shop performance
+                </p>
+
+            </div>
+
+
+            <div class="header-actions">
+
+                <button
+                    class="btn btn-secondary"
+                    onclick="printReport()">
+
+                    🖨 Print
+
+                </button>
+
+
+                <button
+                    class="btn btn-primary"
+                    onclick="exportReport()">
+
+                    📥 Export Report
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             FILTER
+        ========================= -->
+
+        <div class="report-filter">
+
+            <div class="filter-group">
+
+                <label>From Date</label>
+
+                <input
+                    type="date"
+                    id="fromDate"
+                    value="2026-09-01">
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <label>To Date</label>
+
+                <input
+                    type="date"
+                    id="toDate"
+                    value="2026-09-22">
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <label>Report Type</label>
+
+                <select id="reportType">
+
+                    <option value="sales">
+                        Sales Report
+                    </option>
+
+                    <option value="products">
+                        Product Report
+                    </option>
+
+                    <option value="customers">
+                        Customer Report
+                    </option>
+
+                    <option value="inventory">
+                        Inventory Report
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                class="btn btn-primary"
+                onclick="generateReport()">
+
+                Generate
+
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             SUMMARY CARDS
+        ========================= -->
+
+        <div class="report-stats">
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    💰
+                </div>
+
+                <h3>₹1,25,500</h3>
+
+                <p>Total Revenue</p>
+
+                <div class="positive">
+                    ↑ 12.5% from last month
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🧾
+                </div>
+
+                <h3>48</h3>
+
+                <p>Total Orders</p>
+
+                <div class="positive">
+                    ↑ 8.2% from last month
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📦
+                </div>
+
+                <h3>128</h3>
+
+                <p>Products Sold</p>
+
+                <div class="positive">
+                    ↑ 6.4% from last month
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    👥
+                </div>
+
+                <h3>342</h3>
+
+                <p>Total Customers</p>
+
+                <div class="positive">
+                    ↑ 4.8% from last month
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             CHART + PAYMENT
+        ========================= -->
+
+        <div class="report-grid">
+
+
+            <!-- SALES CHART -->
+
+            <div class="report-card">
+
+                <div class="report-card-header">
+
+                    <h2>Sales Overview</h2>
+
+                    <span>
+                        September 2026
+                    </span>
+
+                </div>
+
+
+                <div class="chart">
+
+
+                    <div class="bar-wrapper">
+
+                        <div
+                            class="bar"
+                            style="height: 45%;">
+                        </div>
+
+                        <span class="bar-label">
+                            Mon
+                        </span>
+
+                    </div>
+
+
+                    <div class="bar-wrapper">
+
+                        <div
+                            class="bar"
+                            style="height: 65%;">
+                        </div>
+
+                        <span class="bar-label">
+                            Tue
+                        </span>
+
+                    </div>
+
+
+                    <div class="bar-wrapper">
+
+                        <div
+                            class="bar"
+                            style="height: 55%;">
+                        </div>
+
+                        <span class="bar-label">
+                            Wed
+                        </span>
+
+                    </div>
+
+
+                    <div class="bar-wrapper">
+
+                        <div
+                            class="bar"
+                            style="height: 80%;">
+                        </div>
+
+                        <span class="bar-label">
+                            Thu
+                        </span>
+
+                    </div>
+
+
+                    <div class="bar-wrapper">
+
+                        <div
+                            class="bar"
+                            style="height: 70%;">
+                        </div>
+
+                        <span class="bar-label">
+                            Fri
+                        </span>
+
+                    </div>
+
+
+                    <div class="bar-wrapper">
+
+                        <div
+                            class="bar"
+                            style="height: 95%;">
+                        </div>
+
+                        <span class="bar-label">
+                            Sat
+                        </span>
+
+                    </div>
+
+
+                    <div class="bar-wrapper">
+
+                        <div
+                            class="bar"
+                            style="height: 60%;">
+                        </div>
+
+                        <span class="bar-label">
+                            Sun
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PAYMENT SUMMARY -->
+
+            <div class="report-card">
+
+                <div class="report-card-header">
+
+                    <h2>Payment Methods</h2>
+
+                </div>
+
+
+                <div class="payment-item">
+
+                    <div class="payment-top">
+
+                        <span>UPI</span>
+
+                        <span>45%</span>
+
+                    </div>
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar"
+                            style="width:45%;">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="payment-item">
+
+                    <div class="payment-top">
+
+                        <span>Card</span>
+
+                        <span>30%</span>
+
+                    </div>
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar"
+                            style="width:30%;">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="payment-item">
+
+                    <div class="payment-top">
+
+                        <span>Cash</span>
+
+                        <span>20%</span>
+
+                    </div>
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar"
+                            style="width:20%;">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="payment-item">
+
+                    <div class="payment-top">
+
+                        <span>Bank Transfer</span>
+
+                        <span>5%</span>
+
+                    </div>
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar"
+                            style="width:5%;">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             TOP PRODUCTS + SALES
+        ========================= -->
+
+        <div class="report-grid">
+
+
+            <!-- TOP PRODUCTS -->
+
+            <div class="report-card">
+
+                <div class="report-card-header">
+
+                    <h2>Top Selling Products</h2>
+
+                    <span>
+                        This Month
+                    </span>
+
+                </div>
+
+
+                <div class="product-item">
+
+                    <div class="product-number">
+                        1
+                    </div>
+
+                    <div class="product-details">
+
+                        <strong>
+                            iPhone 15
+                        </strong>
+
+                        <small>
+                            Apple
+                        </small>
+
+                    </div>
+
+                    <div class="product-sales">
+                        32 sold
+                    </div>
+
+                </div>
+
+
+                <div class="product-item">
+
+                    <div class="product-number">
+                        2
+                    </div>
+
+                    <div class="product-details">
+
+                        <strong>
+                            Galaxy S24
+                        </strong>
+
+                        <small>
+                            Samsung
+                        </small>
+
+                    </div>
+
+                    <div class="product-sales">
+                        28 sold
+                    </div>
+
+                </div>
+
+
+                <div class="product-item">
+
+                    <div class="product-number">
+                        3
+                    </div>
+
+                    <div class="product-details">
+
+                        <strong>
+                            OnePlus 12
+                        </strong>
+
+                        <small>
+                            OnePlus
+                        </small>
+
+                    </div>
+
+                    <div class="product-sales">
+                        24 sold
+                    </div>
+
+                </div>
+
+
+                <div class="product-item">
+
+                    <div class="product-number">
+                        4
+                    </div>
+
+                    <div class="product-details">
+
+                        <strong>
+                            Pixel 9
+                        </strong>
+
+                        <small>
+                            Google
+                        </small>
+
+                    </div>
+
+                    <div class="product-sales">
+                        18 sold
+                    </div>
+
+                </div>
+
+
+                <div class="product-item">
+
+                    <div class="product-number">
+                        5
+                    </div>
+
+                    <div class="product-details">
+
+                        <strong>
+                            Redmi Note 14
+                        </strong>
+
+                        <small>
+                            Xiaomi
+                        </small>
+
+                    </div>
+
+                    <div class="product-sales">
+                        15 sold
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SALES SUMMARY -->
+
+            <div class="report-card">
+
+                <div class="report-card-header">
+
+                    <h2>Sales Summary</h2>
+
+                </div>
+
+
+                <div class="payment-item">
+
+                    <div class="payment-top">
+
+                        <span>Gross Sales</span>
+
+                        <span>₹1,40,000</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="payment-item">
+
+                    <div class="payment-top">
+
+                        <span>Discount</span>
+
+                        <span>₹8,500</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="payment-item">
+
+                    <div class="payment-top">
+
+                        <span>Returns</span>
+
+                        <span>₹6,000</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="payment-item">
+
+                    <div class="payment-top">
+
+                        <span>Net Sales</span>
+
+                        <span>₹1,25,500</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             RECENT TRANSACTIONS
+        ========================= -->
+
+        <div class="table-container">
+
+            <div class="table-header">
+
+                <h2>Recent Transactions</h2>
+
+                <span>
+                    Latest sales activity
+                </span>
+
+            </div>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Sale ID</th>
+
+                        <th>Customer</th>
+
+                        <th>Product</th>
+
+                        <th>Payment</th>
+
+                        <th>Amount</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <tr>
+
+                        <td>
+                            #S001
+                        </td>
+
+                        <td>
+                            Arjun Kumar
+                        </td>
+
+                        <td>
+                            iPhone 15
+                        </td>
+
+                        <td>
+                            UPI
+                        </td>
+
+                        <td class="amount">
+                            ₹69,999
+                        </td>
+
+                        <td>
+
+                            <span class="status completed">
+                                Completed
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            #S002
+                        </td>
+
+                        <td>
+                            Rahul Raj
+                        </td>
+
+                        <td>
+                            Galaxy S24
+                        </td>
+
+                        <td>
+                            Card
+                        </td>
+
+                        <td class="amount">
+                            ₹74,999
+                        </td>
+
+                        <td>
+
+                            <span class="status completed">
+                                Completed
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            #S003
+                        </td>
+
+                        <td>
+                            Neha S
+                        </td>
+
+                        <td>
+                            OnePlus 12
+                        </td>
+
+                        <td>
+                            Cash
+                        </td>
+
+                        <td class="amount">
+                            ₹64,999
+                        </td>
+
+                        <td>
+
+                            <span class="status completed">
+                                Completed
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            #S004
+                        </td>
+
+                        <td>
+                            Fathima P
+                        </td>
+
+                        <td>
+                            Redmi Note 14
+                        </td>
+
+                        <td>
+                            UPI
+                        </td>
+
+                        <td class="amount">
+                            ₹18,999
+                        </td>
+
+                        <td>
+
+                            <span class="status completed">
+                                Completed
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        // Generate report
+        function generateReport() {
+
+            const fromDate =
+                document.getElementById("fromDate").value;
+
+            const toDate =
+                document.getElementById("toDate").value;
+
+            const reportType =
+                document.getElementById("reportType").value;
+
+
+            if (!fromDate || !toDate) {
+
+                alert("Please select both dates.");
+
+                return;
+            }
+
+
+            if (fromDate > toDate) {
+
+                alert("From date cannot be after To date.");
+
+                return;
+            }
+
+
+            alert(
+                "Generating " +
+                reportType +
+                " from " +
+                fromDate +
+                " to " +
+                toDate
+            );
+
+        }
+
+
+        // Export report
+        function exportReport() {
+
+            alert(
+                "Report export will be connected to the Node.js backend later."
+            );
+
+        }
+
+
+        // Print report
+        function printReport() {
+
+            window.print();
+
+        }
+
+    </script>
+
+</body>
+
+</html>
